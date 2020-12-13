@@ -8,6 +8,7 @@ services:
       - "4000:5000"
   db_alya:
     image: mysql:5.7
+    restart: unless-stopped
     ports:
       - "33000:3306"
     environment:
