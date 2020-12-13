@@ -3,7 +3,7 @@ services:
   app_alya:
     build: .
     links:
-      - db
+      - db_alya
     ports:
       - "4000:5000"
   db_alya:
