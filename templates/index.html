@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Alya's!</title>
+    <title>18218029 - Home</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <span class="navbar-brand mb-0 h1">18218029</span>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -16,13 +16,16 @@
                         <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/addresource">Add new resource</a>
+                        <a class="nav-link" href="/addresource">Add</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/deleteresource">Delete resource</a>
+                        <a class="nav-link" href="/deleteresource">Delete</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/resources">Resources JSON</a>
+                        <a class="nav-link" href="/editresource">Edit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources">JSON</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
@@ -48,26 +51,6 @@
     </div>
 </body>
 <script>
-    // function submit() {
-    //     $.ajax({
-    //         url: '/new-resource',
-    //         method: 'post',
-    //         data: {
-    //             'name': $('#name').val(),
-    //             'category': $('#category').val(),
-    //             'description': $('#description').val(),
-    //             'location': $('#location').val(),
-    //         },
-    //         success: function (response) {
-    //             console.log(response);
-    //             $('#feedback').html('Resource added');
-    //         },
-    //         error: function (response) {
-    //             console.log(response);
-    //         }
-    //     })
-    // }
-
     function getResources() {
         content = "";
         $.ajax({

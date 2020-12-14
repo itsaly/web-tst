@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>18218029 - Edit Resource</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">18218029</span>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addresource">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/deleteresource">Delete</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/editresource">Edit<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources">JSON</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <h1 class="display-3">Resources List</h1>
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="resources"></tbody>
+        </table>
+        </div>
+        <a id="edit"></a>
+    </div>
+</body>
+<script>
+    function update(id) {
+        $.ajax({
+            url: '/edit-resource/'+ id,
+            method: 'put',
+            data: {
+                'name': $('#name').val(),
+                'category': $('#category').val(),
+                'description': $('#description').val(),
+                'location': $('#location').val(),
+            },
+            success: function (response) {
+                console.log(response);
+                $('#feedback').html('Resource updated');
+                window.location.reload();
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
+    }
+
+    function submit(id) {
+        content = ""
+        $.ajax({
+            url: '/resources/'+ id,
+            type: 'get',
+            crossDomain: true,
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                $.each(response.resource.slice(0,501), function (key,value) {
+                    name = '<div class="form-group"><label for="name">Resource name</label><input type="text" placeholder="Enter resource name" id="name" class="form-control" value="'+ value.name +'" required></div>'
+                    category = '<div class="form-group"><label for="category">Resource category</label><select class="form-control" id="category" required><option value="Artifacts">Artifacts</option><option value="Development Items">Development Items</option><option value="Food">Food</option><option value="Materials">Materials</option><option value="Precious Items">Precious Items</option><option value="Weapons">Weapons</option></select></div>'
+                    description = '<div class="form-group"><label for="description">Resource description</label><textarea class="form-control" placeholder="Enter resource description" id="description" rows="3" required>'+ value.desc +'</textarea></div>'
+                    locate = '<div class="form-group"><label for="location">Resource location</label><textarea class="form-control" placeholder="Enter resource location" id="location" rows="3" required>'+ value.location +'</textarea></div>'
+                    button = '<button type="submit" class="btn btn-primary" onclick="update('+id+')">Update resource</button>'
+                    feedback = '<span id="feedback"></span>'
+                    content += '<br><h1 class="display-3">Update Resource</h1>' + name + category + description + locate + button + feedback
+                });
+                $('#edit').html(content);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
+    }
+
+    function getResources() {
+        content = "";
+        $.ajax({
+            url: '/resources',
+            type: 'get',
+            crossDomain: true,
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                $.each(response.resources.slice(0,501), function (key,value) {
+                    content += '<tr><td>' + value.id + '</td><td>' + value.name + '</td><td>' + value.category + '</td><td>' + value.desc + '</td><td>' + value.location + '</td><td><button type="submit" class="btn btn-primary" onclick="submit(' + value.id + ')">Edit</button></td></tr>';
+                });
+                $('#resources').html(content);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
+    }
+
+    $(document).ready(
+        function() {
+            getResources();
+        }
+    );
+</script>
+</html>

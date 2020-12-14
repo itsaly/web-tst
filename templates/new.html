@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Alya's!</title>
+    <title>18218029 - Add Resource</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <span class="navbar-brand mb-0 h1">18218029</span>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -16,13 +16,16 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/addresource">Add new resource<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/addresource">Add<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/deleteresource">Delete resource</a>
+                        <a class="nav-link" href="/deleteresource">Delete</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/resources">Resources JSON</a>
+                        <a class="nav-link" href="/editresource">Edit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources">JSON</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
@@ -31,11 +34,30 @@
             </div>
         </nav>
         <h1 class="display-3">New Resource</h1>
-        <input type="text" placeholder="Name" id="name" required><br>
-        <input type="text" placeholder="Category" id="category" required><br>
-        <textarea placeholder="Resource description" id="description" required></textarea><br>
-        <textarea placeholder="Resource location" id="location" required></textarea><br>
-        <button onclick="submit()">Add resource</button><br>
+        <div class="form-group">
+            <label for="name">Resource name</label>
+            <input type="text" placeholder="Enter resource name" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Resource category</label>
+            <select class="form-control" id="category" required>
+                <option value="Artifacts">Artifacts</option>
+                <option value="Development Items">Development Items</option>
+                <option value="Food">Food</option>
+                <option value="Materials">Materials</option>
+                <option value="Precious Items">Precious Items</option>
+                <option value="Weapons">Weapons</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Resource description</label>
+            <textarea class="form-control" placeholder="Enter resource description" id="description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="location">Resource location</label>
+            <textarea class="form-control" placeholder="Enter resource location" id="location" rows="3" required></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="submit()">Add resource</button>
         <a id="feedback"></a>
     </div>
 </body>

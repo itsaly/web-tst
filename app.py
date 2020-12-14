@@ -62,6 +62,14 @@ def del_resource():
         return redirect(url_for('login'))
     return render_template('delete.html')
 
+@app.route('/editresource')
+def editresource():
+    app.logger.error(time.strftime('%A %B, %d %Y %H:%M:%S') + ' akses edit resource page')
+    access_token = session.get('access_token')
+    if access_token is None:
+        return redirect(url_for('login'))
+    return render_template('edit.html')
+
 # get all resources
 @app.route('/resources', methods=['GET'])
 def get_resources():
@@ -84,6 +92,29 @@ def get_resources():
         result_baru.append(the_resource)
 
     return {'resources': result_baru}
+
+# get specific resource
+@app.route('/resources/<string:id>', methods=['GET'])
+def get_spec_resources(id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    query = 'SELECT * FROM resources WHERE id = %s'
+    cursor.execute(query,id)
+    result = cursor.fetchall()
+    conn.close()
+
+    result_baru = []
+    for resource in result:
+        the_resource = {
+            'id': resource[0],
+            'name': resource[1],
+            'category': resource[2],
+            'desc': resource[3],
+            'location': resource[4]
+        }
+        result_baru.append(the_resource)
+
+    return {'resource': result_baru}
 
 # create new resource
 @app.route('/new-resource', methods=['POST'])
@@ -112,7 +143,7 @@ def insert_resource():
 
     return {'added': result}
 
-# create new resource
+# delete resource
 @app.route('/delete-resource/<string:id>', methods=['DELETE'])
 def delete_resource(id):
     conn = mysql.connect()
@@ -139,6 +170,33 @@ def delete_resource(id):
         result_baru.append(the_resource)
 
     return {'deleted': result_baru}
+
+# edit existing resource
+@app.route('/edit-resource/<string:id>', methods=['PUT'])
+def edit_resource(id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    
+    name = request.form['name']
+    category = request.form['category']
+    desc = request.form['description']
+    location = request.form['location']
+
+    query = 'UPDATE resources SET name = %s, category = %s, description = %s, location = %s WHERE id = %s'
+    data = (name, category, desc, location, id)
+
+    cursor.execute(query,data)
+    conn.commit()
+    conn.close()
+
+    result = {
+        'name': name,
+        'category': category,
+        'desc': desc,
+        'location': location
+    }
+
+    return {'edited': result}
 
 if __name__ == '__main__':
     handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
